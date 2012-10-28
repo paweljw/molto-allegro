@@ -11,7 +11,7 @@
 #include <allegro5/allegro_ttf.h>
 using namespace std;
 
-typedef int (*fptr)();
+typedef int (*fptr)(void*);
 
 enum MENU_STATE
 {
@@ -20,6 +20,29 @@ enum MENU_STATE
 };
 
 extern bool pointInRectangle(float, float, float, float, float, float);
+
+/*!
+ * \class MenuElem
+ *
+ * \brief Basic clickable element of a menu
+ * \date
+ */
+
+class MenuElem
+{
+	string name;
+	fptr callback;
+	void* args;
+	bool active;
+public:
+	MenuElem(string, fptr, void*);
+	MenuElem(string, fptr, void*, bool);
+	void click();	
+	bool isActive();
+	void activate();
+	void deactivate();
+	string getName();
+};
 
 /*!
  * \class MenuTopElem
@@ -32,14 +55,14 @@ extern bool pointInRectangle(float, float, float, float, float, float);
 class MenuTopElem
 {
 	string name;
-//	vector<MenuElem> elems;
 	bool _open;
 	float x1, x2;
 	float y1, y2;
 
 public:
+	vector<MenuElem> elems;
 	MenuTopElem(string);
-	void addElem(string);
+	void addElem(string, fptr, void*);
 	void open();
 	void close();
 	bool isOpen();
@@ -70,6 +93,7 @@ class Menu
 	void setPos(float, float, float, float);
 	MENU_STATE state;
 	int openIx;
+	int hitBoxW;
 public:
 	void addElem(string);
 	void getPos(float&, float&, float&, float&);
@@ -79,28 +103,6 @@ public:
 	void hide();
 	void draw(ALLEGRO_DISPLAY*);
 	void draw(ALLEGRO_BITMAP*);
-	MenuTopElem operator[](string);
+	MenuTopElem* element(const char*);
 	bool click(float, float);
 };
-
-
-
-/*!
- * \class MenuElem
- *
- * \brief Basic clickable element of a menu
- * \date
- */
-/*
-
-class MenuElem
-{
-	string name;
-	fptr callback;
-	bool active;
-public:
-	MenuElem(string);	
-	isActive();
-};
-
-*/

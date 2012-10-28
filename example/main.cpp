@@ -5,6 +5,12 @@
 
 #include "../src/molto-allegro.h"
 
+int dummy(void* arg)
+{
+	cout << "Callback called; you weren't home." << endl;
+	return 0;
+}
+
 using namespace std;
 
 int main()
@@ -29,6 +35,12 @@ int main()
 	m->addElem(string("Kolejny"));
 	m->addElem(string("Czy one rosną?"));
 
+	m->element("Test")->addElem("Testowa opcja", dummy, (void*)NULL);
+	m->element("Test")->addElem("Testowa opcja 1", dummy, (void*)NULL);
+	m->element("Test")->addElem("Testowa opcja 2", dummy, (void*)NULL);
+	m->element("Test")->addElem("Testowa opcja 3", dummy, (void*)NULL);
+	m->element("Test")->addElem("Testowa opcja 4", dummy, (void*)NULL);
+
 	m->draw(display);
 
 	al_flip_display();
@@ -47,7 +59,14 @@ int main()
       		float x = ev.mouse.x;
 			float y = ev.mouse.y;
 
+			al_set_target_bitmap(al_get_backbuffer(display));
+			al_clear_to_color(al_map_rgb(0,0,0));
+
 			m->click(x, y);
+			m->draw(display);
+
+			al_flip_display();
+			
 		}
 	}
 

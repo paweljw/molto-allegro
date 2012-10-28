@@ -9,6 +9,8 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <iostream>
+#include <stdlib.h>
+#include <time.h>
 
 #include "molto-allegro.h"
 using namespace std;
@@ -73,19 +75,21 @@ Menu::Menu(ALLEGRO_DISPLAY*& disp)
 	font = al_load_ttf_font("dvs.ttf", MENU_HT/2 + 2, 0);
 
 	menubmp = al_create_bitmap(screen_w, screen_h);
+	cout << screen_w << "x" << screen_h << endl;
 
 	state = MENU_CLOSED;
+	hitBoxW = 0;
 }
 
 bool Menu::click(float x, float y)
 {
-	float x1, x2, y1, y2;
+	float tx1, tx2, ty1, ty2;
 
 	for(unsigned int i=0;i<elems.size();i++)
 	{
-		elems.at(i).getPos(x1, y1, x2, y2);
+		elems.at(i).getPos(tx1, ty1, tx2, ty2);
 		cout << x1 << "," << y1 << " " << x2 << "," << y2 << endl;
-		if(pIR(x1, y1, x2, y2, x, y))
+		if(pIR(tx1, ty1, tx2, ty2, x, y))
 		{
 			state = MENU_OPEN;
 			openIx = i;
@@ -96,14 +100,26 @@ bool Menu::click(float x, float y)
 
 	// no top level menus have been hit; are we open?
 	
-	/*if(state == MENU_OPEN)
+	if(state == MENU_OPEN)
 	{
 		// we check rectangle with:
 		// x1 = openIx's x1
 		// y1 = MENU_HT
 		// x2 = openIx's number of elements times MENU_HT
-		// y2 = openIx's width (???)
-	} */ 
+		// y2 = hitBoxW
+
+		elems.at(openIx).getPos(tx1, ty1, tx2, ty2);		
+
+		for(unsigned int i=0;i<elems.at(openIx).elems.size();i++)
+		{
+			if(pIR(tx1, MENU_HT * (i+1), tx1 + hitBoxW, MENU_HT * (i+2), x, y))
+			{
+				elems.at(openIx).elems.at(i).click();
+				state = MENU_CLOSED;
+				return true;
+			}
+		}	
+	} 
 
 	if(state == MENU_OPEN)
 	{
@@ -164,7 +180,10 @@ void Menu::draw(ALLEGRO_BITMAP* bmp)
  */
 void Menu::draw()
 {
+	cout << "Going draw" << endl;
+
 	al_set_target_bitmap(menubmp);
+
 	al_clear_to_color(al_map_rgba(0,0,0,0));
 
 	al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(255, 255, 240));
@@ -186,15 +205,75 @@ void Menu::draw()
 		elems.at(i).setPos(offset, 0, offset+cw, MENU_HT);
 		offset += cw;
 	}
+
+	// Step two: drawing currently open menu
+	if(state == MENU_OPEN)
+	{
+		int height = 0; // base height
+
+		height += elems.at(openIx).elems.size()*MENU_HT;
+			
+		cout << "Draw height " << height << endl;
+
+		float tx1, tx2, ty1, ty2;
+		elems.at(openIx).getPos(tx1, ty1, tx2, ty2);		
+		cout << x2 << "," << y2 << endl;
+
+		if(height == 0)
+		{
+			// empty menu!
+			height = MENU_HT;
+			int longest = 30 + al_get_text_width(font, "- Empty -") + tx1;
+			al_draw_filled_rectangle(tx1, MENU_HT-2, longest, height+MENU_HT, al_map_rgb(255, 255, 240));
+
+			al_draw_line(longest, MENU_HT-2, longest, MENU_HT*2, al_map_rgb(0x66, 0x66, 0x66), 1);
+			al_draw_line(tx1, height+MENU_HT, longest, MENU_HT*2, al_map_rgb(0x66, 0x66, 0x66), 1);	
+
+			al_draw_text(font, al_map_rgb(0x66, 0x66, 0x66), tx1+10, MENU_HT*1+2, ALLEGRO_ALIGN_LEFT, "- Empty -");		
+		} else {
+
+
+			unsigned int mSize = 0;
+			int mInt  = 0;
+	
+			for(unsigned int i=0; i<elems.at(openIx).elems.size(); i++)
+			{
+				if(elems.at(openIx).elems.at(i).getName().length() > mSize) 
+				{
+					mSize = elems.at(openIx).elems.at(i).getName().length();
+					mInt  = i;
+				} 
+			}
+
+			int longest = 30 + al_get_text_width(font, elems.at(openIx).elems.at(mInt).getName().c_str());
+			hitBoxW = longest;
+			al_draw_filled_rectangle(tx1, MENU_HT-2, tx1 + longest, height+MENU_HT, al_map_rgb(255, 255, 240));
+
+			for(unsigned int i=0; i<elems.at(openIx).elems.size(); i++)
+			{
+				ALLEGRO_COLOR col;
+				MenuElem menel = elems.at(openIx).elems.at(i);
+				col = (menel.isActive() ? al_map_rgb(0, 0, 0) : al_map_rgb(0x66, 0x66, 0x66));
+				al_draw_text(font, col, tx1+10, MENU_HT*(i+1)+2, ALLEGRO_ALIGN_LEFT, menel.getName().c_str());
+			}
+
+			al_draw_line(longest, MENU_HT-2, tx1 + longest, MENU_HT * ( elems.at(openIx).elems.size()+1), al_map_rgb(0x66, 0x66, 0x66), 1);
+			al_draw_line(tx1, height+MENU_HT, tx1 + longest, MENU_HT * ( elems.at(openIx).elems.size()+1), al_map_rgb(0x66, 0x66, 0x66), 1);
+		}
+	}
 }
 
-MenuTopElem Menu::operator[](string s)
+string MenuElem::getName() { return name; }
+
+MenuTopElem* Menu::element(const char *cs)
 {
+	string s(cs);
+
 	for(unsigned int i=0; i < elems.size(); i++)
 	{
-		if(elems[i].getName() == s) return elems[i];
+		if(elems[i].getName() == s) return &elems[i];
 	}
-	return elems[0];
+	return &elems[0];
 }
 
 // MenuTopElem
@@ -235,13 +314,48 @@ MenuTopElem::MenuTopElem(string s)
 	_open = false;
 }
 
-void MenuTopElem::addElem(string s)
+void MenuTopElem::addElem(string s, fptr f, void* a)
 {
-//	elems.push_back(MenuElem(s));
-// stub
+	elems.push_back(MenuElem(s,f,a));
 }
 
 bool MenuTopElem::isOpen()
 {
 	return _open;
+}
+
+MenuElem::MenuElem(string s, fptr f, void* a)
+{
+	name = s;
+	callback = f;
+	args = a;
+	active = true;
+}
+
+MenuElem::MenuElem(string s, fptr f, void* a, bool b)
+{
+	name = s;
+	callback = f;
+	args = a;
+	active = b;
+}
+
+void MenuElem::click()
+{
+	callback(args);
+}
+
+bool MenuElem::isActive()
+{
+	return active;
+}
+
+void MenuElem::activate()
+{
+	active = true;
+}
+
+void MenuElem::deactivate()
+{
+	active = false;
 }

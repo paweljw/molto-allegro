@@ -9,6 +9,8 @@
 \subsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
+class \hyperlink{classMenuElem}{Menu\-Elem}
+\begin{DoxyCompactList}\small\item\em Basic clickable element of a menu. \end{DoxyCompactList}\item 
 class \hyperlink{classMenuTopElem}{Menu\-Top\-Elem}
 \begin{DoxyCompactList}\small\item\em Top element of a given menu -\/ names shown in top menu bar. \end{DoxyCompactList}\item 
 class \hyperlink{classMenu}{Menu}
@@ -16,8 +18,19 @@ class \hyperlink{classMenu}{Menu}
 \subsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{molto-allegro_8h_a874c65a842ee52811812ecd6538fac6d}{typedef int($\ast$ {\bfseries fptr} )()}\label{molto-allegro_8h_a874c65a842ee52811812ecd6538fac6d}
-
+typedef int($\ast$ \hyperlink{molto-allegro_8h_ab4d4c3a68df99ae93deb075950a7e396}{fptr} )(void $\ast$)
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{molto-allegro_8h_a8b022cbaf1689aca386d8e721bfd9f25}{M\-E\-N\-U\-\_\-\-S\-T\-A\-T\-E} \{ {\bfseries M\-E\-N\-U\-\_\-\-C\-L\-O\-S\-E\-D}, 
+{\bfseries M\-E\-N\-U\-\_\-\-O\-P\-E\-N}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{molto-allegro_8h_a5055d55f6c5a33bd390799e086a69d0d}{point\-In\-Rectangle} (float, float, float, float, float, float)
 \end{DoxyCompactItemize}
 
 
@@ -25,6 +38,31 @@ class \hyperlink{classMenu}{Menu}
 \begin{DoxyAuthor}{Author}
 Paweł J. Wal \href{mailto:pjw@paweljw.eu}{\tt pjw@paweljw.\-eu} 
 \end{DoxyAuthor}
-\begin{DoxyDate}{Date}
 
-\end{DoxyDate}
+
+\subsection{Typedef Documentation}
+\hypertarget{molto-allegro_8h_ab4d4c3a68df99ae93deb075950a7e396}{\index{molto-\/allegro.\-h@{molto-\/allegro.\-h}!fptr@{fptr}}
+\index{fptr@{fptr}!molto-allegro.h@{molto-\/allegro.\-h}}
+\subsubsection[{fptr}]{\setlength{\rightskip}{0pt plus 5cm}typedef int($\ast$ fptr)(void $\ast$)}}\label{molto-allegro_8h_ab4d4c3a68df99ae93deb075950a7e396}
+Simple function pointer definition for later use in callbacks. 
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{molto-allegro_8h_a8b022cbaf1689aca386d8e721bfd9f25}{\index{molto-\/allegro.\-h@{molto-\/allegro.\-h}!M\-E\-N\-U\-\_\-\-S\-T\-A\-T\-E@{M\-E\-N\-U\-\_\-\-S\-T\-A\-T\-E}}
+\index{M\-E\-N\-U\-\_\-\-S\-T\-A\-T\-E@{M\-E\-N\-U\-\_\-\-S\-T\-A\-T\-E}!molto-allegro.h@{molto-\/allegro.\-h}}
+\subsubsection[{M\-E\-N\-U\-\_\-\-S\-T\-A\-T\-E}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf M\-E\-N\-U\-\_\-\-S\-T\-A\-T\-E}}}\label{molto-allegro_8h_a8b022cbaf1689aca386d8e721bfd9f25}
+\hyperlink{classMenu}{Menu} states. Extendable if needed. 
+
+\subsection{Function Documentation}
+\hypertarget{molto-allegro_8h_a5055d55f6c5a33bd390799e086a69d0d}{\index{molto-\/allegro.\-h@{molto-\/allegro.\-h}!point\-In\-Rectangle@{point\-In\-Rectangle}}
+\index{point\-In\-Rectangle@{point\-In\-Rectangle}!molto-allegro.h@{molto-\/allegro.\-h}}
+\subsubsection[{point\-In\-Rectangle}]{\setlength{\rightskip}{0pt plus 5cm}bool point\-In\-Rectangle (
+\begin{DoxyParamCaption}
+\item[{float}]{, }
+\item[{float}]{, }
+\item[{float}]{, }
+\item[{float}]{, }
+\item[{float}]{, }
+\item[{float}]{}
+\end{DoxyParamCaption}
+)}}\label{molto-allegro_8h_a5055d55f6c5a33bd390799e086a69d0d}
+Function checking whether points lay within a rectangle. 

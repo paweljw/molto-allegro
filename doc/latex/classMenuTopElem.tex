@@ -13,26 +13,21 @@ Top element of a given menu -\/ names shown in top menu bar.
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classMenuTopElem_aa81ce746279ce1dbeea41a427f8c1e11}{{\bfseries Menu\-Top\-Elem} (string)}\label{classMenuTopElem_aa81ce746279ce1dbeea41a427f8c1e11}
+\hyperlink{classMenuTopElem_aa81ce746279ce1dbeea41a427f8c1e11}{Menu\-Top\-Elem} (string)
+\begin{DoxyCompactList}\small\item\em Constructor of a \hyperlink{classMenuTopElem}{Menu\-Top\-Elem} using a string. \end{DoxyCompactList}\item 
+void \hyperlink{classMenuTopElem_ad865f1250e1495a4d25d10ce1ea5dfa6}{add\-Elem} (string, \hyperlink{molto-allegro_8h_ab4d4c3a68df99ae93deb075950a7e396}{fptr}, void $\ast$)
+\begin{DoxyCompactList}\small\item\em Add a button to a top menu element (category). \end{DoxyCompactList}\item 
+\hypertarget{classMenuTopElem_a41023b203dfa45c7fa43b6f02f845170}{string \hyperlink{classMenuTopElem_a41023b203dfa45c7fa43b6f02f845170}{get\-Name} ()}\label{classMenuTopElem_a41023b203dfa45c7fa43b6f02f845170}
 
+\begin{DoxyCompactList}\small\item\em Get name of a \hyperlink{classMenuTopElem}{Menu\-Top\-Elem}. \end{DoxyCompactList}\item 
+void \hyperlink{classMenuTopElem_a5e0f820addb5ab86ac65a8d6efbdf19d}{set\-Pos} (float, float, float, float)
+\begin{DoxyCompactList}\small\item\em Sets rectangle coordinates of a \hyperlink{classMenuTopElem}{Menu\-Top\-Elem}. \end{DoxyCompactList}\item 
+void \hyperlink{classMenuTopElem_af14c3962261595b8dd6609ea2c52836c}{get\-Pos} (float \&, float \&, float \&, float \&)
+\begin{DoxyCompactList}\small\item\em Get rectangle coordinates of a \hyperlink{classMenuTopElem}{Menu\-Top\-Elem}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
 \item 
-\hypertarget{classMenuTopElem_a2f2cdb6e30969971782931b4ef6bf357}{void {\bfseries add\-Elem} (string)}\label{classMenuTopElem_a2f2cdb6e30969971782931b4ef6bf357}
-
-\item 
-\hypertarget{classMenuTopElem_aae4b2df96d91f3e38c64d75b5bd8c1e0}{void {\bfseries open} ()}\label{classMenuTopElem_aae4b2df96d91f3e38c64d75b5bd8c1e0}
-
-\item 
-\hypertarget{classMenuTopElem_a18d512946f680d3ef5d4a4c8467b7bbe}{void {\bfseries close} ()}\label{classMenuTopElem_a18d512946f680d3ef5d4a4c8467b7bbe}
-
-\item 
-\hypertarget{classMenuTopElem_a4bad4b96d14a3542f9d744bc9e6cdfe3}{bool {\bfseries is\-Open} ()}\label{classMenuTopElem_a4bad4b96d14a3542f9d744bc9e6cdfe3}
-
-\item 
-\hypertarget{classMenuTopElem_a41023b203dfa45c7fa43b6f02f845170}{string {\bfseries get\-Name} ()}\label{classMenuTopElem_a41023b203dfa45c7fa43b6f02f845170}
-
-\item 
-\hypertarget{classMenuTopElem_a5e0f820addb5ab86ac65a8d6efbdf19d}{void {\bfseries set\-Pos} (float, float, float, float)}\label{classMenuTopElem_a5e0f820addb5ab86ac65a8d6efbdf19d}
-
+vector$<$ \hyperlink{classMenuElem}{Menu\-Elem} $>$ \hyperlink{classMenuTopElem_aa184d1629b43de3e73ae6595c456e880}{elems}
 \end{DoxyCompactItemize}
 
 
@@ -40,12 +35,109 @@ Top element of a given menu -\/ names shown in top menu bar.
 Top element of a given menu -\/ names shown in top menu bar. 
 
 \begin{DoxyAuthor}{Author}
-\mbox{[}your name\mbox{]} 
+Paweł J. Wal \href{mailto:pjw@paweljw.eu}{\tt pjw@paweljw.\-eu} 
 \end{DoxyAuthor}
-\begin{DoxyDate}{Date}
 
-\end{DoxyDate}
 
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classMenuTopElem_aa81ce746279ce1dbeea41a427f8c1e11}{\index{Menu\-Top\-Elem@{Menu\-Top\-Elem}!Menu\-Top\-Elem@{Menu\-Top\-Elem}}
+\index{Menu\-Top\-Elem@{Menu\-Top\-Elem}!MenuTopElem@{Menu\-Top\-Elem}}
+\subsubsection[{Menu\-Top\-Elem}]{\setlength{\rightskip}{0pt plus 5cm}Menu\-Top\-Elem\-::\-Menu\-Top\-Elem (
+\begin{DoxyParamCaption}
+\item[{string}]{s}
+\end{DoxyParamCaption}
+)}}\label{classMenuTopElem_aa81ce746279ce1dbeea41a427f8c1e11}
+
+
+Constructor of a \hyperlink{classMenuTopElem}{Menu\-Top\-Elem} using a string. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & Name to be set. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classMenuTopElem_ad865f1250e1495a4d25d10ce1ea5dfa6}{\index{Menu\-Top\-Elem@{Menu\-Top\-Elem}!add\-Elem@{add\-Elem}}
+\index{add\-Elem@{add\-Elem}!MenuTopElem@{Menu\-Top\-Elem}}
+\subsubsection[{add\-Elem}]{\setlength{\rightskip}{0pt plus 5cm}void Menu\-Top\-Elem\-::add\-Elem (
+\begin{DoxyParamCaption}
+\item[{string}]{s, }
+\item[{{\bf fptr}}]{f, }
+\item[{void $\ast$}]{a}
+\end{DoxyParamCaption}
+)}}\label{classMenuTopElem_ad865f1250e1495a4d25d10ce1ea5dfa6}
+
+
+Add a button to a top menu element (category). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & String for name. \\
+\hline
+{\em f} & Pointer to a callback function \\
+\hline
+{\em a} & Callback argument payload. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classMenuTopElem_af14c3962261595b8dd6609ea2c52836c}{\index{Menu\-Top\-Elem@{Menu\-Top\-Elem}!get\-Pos@{get\-Pos}}
+\index{get\-Pos@{get\-Pos}!MenuTopElem@{Menu\-Top\-Elem}}
+\subsubsection[{get\-Pos}]{\setlength{\rightskip}{0pt plus 5cm}void Menu\-Top\-Elem\-::get\-Pos (
+\begin{DoxyParamCaption}
+\item[{float \&}]{ex1, }
+\item[{float \&}]{ey1, }
+\item[{float \&}]{ex2, }
+\item[{float \&}]{ey2}
+\end{DoxyParamCaption}
+)}}\label{classMenuTopElem_af14c3962261595b8dd6609ea2c52836c}
+
+
+Get rectangle coordinates of a \hyperlink{classMenuTopElem}{Menu\-Top\-Elem}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em ex1} & top left corner of rectangle \\
+\hline
+\mbox{\tt out}  & {\em ey1} & top left corner of rectangle \\
+\hline
+\mbox{\tt out}  & {\em ex2} & bottom right corner of rectangle \\
+\hline
+\mbox{\tt out}  & {\em ey2} & bottom right corner of rectangle \\
+\hline
+\end{DoxyParams}
+\hypertarget{classMenuTopElem_a5e0f820addb5ab86ac65a8d6efbdf19d}{\index{Menu\-Top\-Elem@{Menu\-Top\-Elem}!set\-Pos@{set\-Pos}}
+\index{set\-Pos@{set\-Pos}!MenuTopElem@{Menu\-Top\-Elem}}
+\subsubsection[{set\-Pos}]{\setlength{\rightskip}{0pt plus 5cm}void Menu\-Top\-Elem\-::set\-Pos (
+\begin{DoxyParamCaption}
+\item[{float}]{ex1, }
+\item[{float}]{ey1, }
+\item[{float}]{ex2, }
+\item[{float}]{ey2}
+\end{DoxyParamCaption}
+)}}\label{classMenuTopElem_a5e0f820addb5ab86ac65a8d6efbdf19d}
+
+
+Sets rectangle coordinates of a \hyperlink{classMenuTopElem}{Menu\-Top\-Elem}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ex1} & top left corner of rectangle \\
+\hline
+{\em ey1} & top left corner of rectangle \\
+\hline
+{\em ex2} & bottom right corner of rectangle \\
+\hline
+{\em ey2} & bottom right corner of rectangle \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classMenuTopElem_aa184d1629b43de3e73ae6595c456e880}{\index{Menu\-Top\-Elem@{Menu\-Top\-Elem}!elems@{elems}}
+\index{elems@{elems}!MenuTopElem@{Menu\-Top\-Elem}}
+\subsubsection[{elems}]{\setlength{\rightskip}{0pt plus 5cm}vector$<${\bf Menu\-Elem}$>$ Menu\-Top\-Elem\-::elems}}\label{classMenuTopElem_aa184d1629b43de3e73ae6595c456e880}
+All elements of the category. 
 
 The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 

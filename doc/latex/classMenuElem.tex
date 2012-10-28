@@ -10,16 +10,86 @@ Basic clickable element of a menu.
 
 {\ttfamily \#include $<$molto-\/allegro.\-h$>$}
 
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classMenuElem_ab62423ecda024bc17399a2516df78520}{Menu\-Elem} (string, \hyperlink{molto-allegro_8h_ab4d4c3a68df99ae93deb075950a7e396}{fptr}, void $\ast$)
+\begin{DoxyCompactList}\small\item\em \hyperlink{classMenuElem}{Menu\-Elem} constructor. \end{DoxyCompactList}\item 
+\hypertarget{classMenuElem_a85a05adaaa88ec6cd69fdae4872cdab6}{void \hyperlink{classMenuElem_a85a05adaaa88ec6cd69fdae4872cdab6}{click} ()}\label{classMenuElem_a85a05adaaa88ec6cd69fdae4872cdab6}
+
+\begin{DoxyCompactList}\small\item\em \hyperlink{classMenuElem}{Menu\-Elem} click event. \end{DoxyCompactList}\item 
+bool \hyperlink{classMenuElem_aebd7405f62e80fbcd9c7dd9a10dfae25}{is\-Active} ()
+\begin{DoxyCompactList}\small\item\em Check whether \hyperlink{classMenuElem}{Menu\-Elem} is active (clickable). \end{DoxyCompactList}\item 
+\hypertarget{classMenuElem_a58fea924596d1297fc61c334e5507642}{void \hyperlink{classMenuElem_a58fea924596d1297fc61c334e5507642}{activate} ()}\label{classMenuElem_a58fea924596d1297fc61c334e5507642}
+
+\begin{DoxyCompactList}\small\item\em Activate a \hyperlink{classMenuElem}{Menu\-Elem}. \end{DoxyCompactList}\item 
+\hypertarget{classMenuElem_a7a060cffe47f9fcb427d45c082602e9f}{void \hyperlink{classMenuElem_a7a060cffe47f9fcb427d45c082602e9f}{deactivate} ()}\label{classMenuElem_a7a060cffe47f9fcb427d45c082602e9f}
+
+\begin{DoxyCompactList}\small\item\em Deactivate a \hyperlink{classMenuElem}{Menu\-Elem}. \end{DoxyCompactList}\item 
+string \hyperlink{classMenuElem_ad1d398c9481929bd04e3a70a1129a592}{get\-Name} ()
+\begin{DoxyCompactList}\small\item\em Returns name of a \hyperlink{classMenuElem}{Menu\-Elem}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 Basic clickable element of a menu. 
 
-\begin{DoxyDate}{Date}
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classMenuElem_ab62423ecda024bc17399a2516df78520}{\index{Menu\-Elem@{Menu\-Elem}!Menu\-Elem@{Menu\-Elem}}
+\index{Menu\-Elem@{Menu\-Elem}!MenuElem@{Menu\-Elem}}
+\subsubsection[{Menu\-Elem}]{\setlength{\rightskip}{0pt plus 5cm}Menu\-Elem\-::\-Menu\-Elem (
+\begin{DoxyParamCaption}
+\item[{string}]{s, }
+\item[{{\bf fptr}}]{f, }
+\item[{void $\ast$}]{a}
+\end{DoxyParamCaption}
+)}}\label{classMenuElem_ab62423ecda024bc17399a2516df78520}
 
-\end{DoxyDate}
+
+\hyperlink{classMenuElem}{Menu\-Elem} constructor. 
 
 
-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\begin{DoxyParams}{Parameters}
+{\em s} & String for name. \\
+\hline
+{\em f} & Pointer to a callback function \\
+\hline
+{\em a} & Callback argument payload. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classMenuElem_ad1d398c9481929bd04e3a70a1129a592}{\index{Menu\-Elem@{Menu\-Elem}!get\-Name@{get\-Name}}
+\index{get\-Name@{get\-Name}!MenuElem@{Menu\-Elem}}
+\subsubsection[{get\-Name}]{\setlength{\rightskip}{0pt plus 5cm}string Menu\-Elem\-::get\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classMenuElem_ad1d398c9481929bd04e3a70a1129a592}
+
+
+Returns name of a \hyperlink{classMenuElem}{Menu\-Elem}. 
+
+\begin{DoxyReturn}{Returns}
+Element's name. 
+\end{DoxyReturn}
+\hypertarget{classMenuElem_aebd7405f62e80fbcd9c7dd9a10dfae25}{\index{Menu\-Elem@{Menu\-Elem}!is\-Active@{is\-Active}}
+\index{is\-Active@{is\-Active}!MenuElem@{Menu\-Elem}}
+\subsubsection[{is\-Active}]{\setlength{\rightskip}{0pt plus 5cm}bool Menu\-Elem\-::is\-Active (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classMenuElem_aebd7405f62e80fbcd9c7dd9a10dfae25}
+
+
+Check whether \hyperlink{classMenuElem}{Menu\-Elem} is active (clickable). 
+
+\begin{DoxyReturn}{Returns}
+Boolean active. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-\hyperlink{molto-allegro_8h}{molto-\/allegro.\-h}\end{DoxyCompactItemize}
+\hyperlink{molto-allegro_8h}{molto-\/allegro.\-h}\item 
+\hyperlink{molto-allegro_8cpp}{molto-\/allegro.\-cpp}\end{DoxyCompactItemize}

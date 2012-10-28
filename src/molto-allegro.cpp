@@ -15,8 +15,12 @@
 #include "molto-allegro.h"
 using namespace std;
 
+/*! Menu height. */
 #define MENU_HT 25
 
+/*!
+ * \brief Checks whether point is within a rectangle.
+ */
 bool pIR(float x1, float y1, float x2, float y2, float xp, float yp)
 {
 	if(xp >= x1 && xp <= x2 && yp >= y1 && yp <= y2) return true;
@@ -81,6 +85,12 @@ Menu::Menu(ALLEGRO_DISPLAY*& disp)
 	hitBoxW = 0;
 }
 
+/*!
+ * \brief Click event for menu class.
+ *
+ * \param x X coordinate of mouse during click.
+ * \param y Y coordinate of mouse during click.
+ */
 bool Menu::click(float x, float y)
 {
 	float tx1, tx2, ty1, ty2;
@@ -130,26 +140,6 @@ bool Menu::click(float x, float y)
 
 	return false;
 }		
-
-/*!
- * \brief Checks whether menu is shown.
- *
- * \return Shown status of menu.
- */
-bool Menu::isShown()
-{
-	return shown;
-}
-
-/*!
- * \brief Shows menu.
- */
-void Menu::show() { shown = true; }
-
-/*!
- * \brief Hides menu.
- */
-void Menu::hide() { shown = false; }
 
 /*!
  * \brief Draws menu to a display.
@@ -263,8 +253,19 @@ void Menu::draw()
 	}
 }
 
+/*!
+ * \brief Returns name of a MenuElem.
+ *
+ * \return Element's name.
+ */
 string MenuElem::getName() { return name; }
 
+/*!
+ * \brief Returns MenuTopElem by name.
+ *
+ * \param cs name of element to be found.
+ * \return MenuTopElem* of given name.
+ */
 MenuTopElem* Menu::element(const char *cs)
 {
 	string s(cs);
@@ -276,14 +277,28 @@ MenuTopElem* Menu::element(const char *cs)
 	return &elems[0];
 }
 
-// MenuTopElem
-
+/*!
+ * \brief Get rectangle coordinates of a MenuTopElem.
+ *
+ * \param[out] ex1 top left corner of rectangle
+ * \param[out] ey1 top left corner of rectangle
+ * \param[out] ex2 bottom right corner of rectangle
+ * \param[out] ey2 bottom right corner of rectangle
+ */
 void MenuTopElem::getPos(float &ex1, float &ey1, float &ex2, float &ey2)
 {
 	ex1 = x1; ex2 = x2;
 	ey1 = y1; ey2 = y2;
 }
 
+/*!
+ * \brief Sets rectangle coordinates of a MenuTopElem.
+ *
+ * \param ex1 top left corner of rectangle
+ * \param ey1 top left corner of rectangle
+ * \param ex2 bottom right corner of rectangle
+ * \param ey2 bottom right corner of rectangle
+ */
 void MenuTopElem::setPos(float ex1, float ey1, float ex2, float ey2)
 {
 	x1 = ex1;
@@ -293,37 +308,43 @@ void MenuTopElem::setPos(float ex1, float ey1, float ex2, float ey2)
 	y2 = ey2;
 }
 
+/*!
+ * \brief Get name of a MenuTopElem.
+ */
 string MenuTopElem::getName()
 {
 	return name;
 }
 
-void MenuTopElem::open()
-{
-	_open = true;
-}
-
-void MenuTopElem::close()
-{
-	_open = false;
-}
-
+/*!
+ * \brief Constructor of a MenuTopElem using a string.
+ * 
+ * \param s Name to be set.
+ */
 MenuTopElem::MenuTopElem(string s)
 {
 	name = s;
-	_open = false;
 }
 
+/*!
+ * \brief Add a button to a top menu element (category).
+ * 
+ * \param s String for name.
+ * \param f Pointer to a callback function
+ * \param a Callback argument payload.
+ */
 void MenuTopElem::addElem(string s, fptr f, void* a)
 {
 	elems.push_back(MenuElem(s,f,a));
 }
 
-bool MenuTopElem::isOpen()
-{
-	return _open;
-}
-
+/*!
+ * \brief MenuElem constructor.
+ *
+ * \param s String for name.
+ * \param f Pointer to a callback function
+ * \param a Callback argument payload.
+ */
 MenuElem::MenuElem(string s, fptr f, void* a)
 {
 	name = s;
@@ -332,29 +353,46 @@ MenuElem::MenuElem(string s, fptr f, void* a)
 	active = true;
 }
 
+/*
 MenuElem::MenuElem(string s, fptr f, void* a, bool b)
 {
 	name = s;
 	callback = f;
 	args = a;
 	active = b;
-}
+}*/
 
+/*!
+ * \brief MenuElem click event.
+ *
+ */
 void MenuElem::click()
 {
 	callback(args);
 }
 
+/*!
+ * \brief Check whether MenuElem is active (clickable).
+ *
+ * \return Boolean active.
+ */
 bool MenuElem::isActive()
 {
 	return active;
 }
 
+/*!
+ * \brief Activate a MenuElem.
+ */
 void MenuElem::activate()
 {
 	active = true;
 }
 
+
+/*!
+ * \brief Deactivate a MenuElem.
+ */
 void MenuElem::deactivate()
 {
 	active = false;

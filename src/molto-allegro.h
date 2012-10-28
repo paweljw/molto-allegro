@@ -2,7 +2,6 @@
  * \file molto-allegro.h
  *
  * \author Paweł J. Wal <pjw@paweljw.eu>
- * \date
  */
 #include <vector>
 #include <string>
@@ -11,32 +10,37 @@
 #include <allegro5/allegro_ttf.h>
 using namespace std;
 
+/*! Simple function pointer definition for later use in callbacks. */
 typedef int (*fptr)(void*);
 
+/*! Menu states. Extendable if needed. */
 enum MENU_STATE
 {
 	MENU_CLOSED,
 	MENU_OPEN
 };
 
+/*! Function checking whether points lay within a rectangle. */
 extern bool pointInRectangle(float, float, float, float, float, float);
 
 /*!
  * \class MenuElem
  *
  * \brief Basic clickable element of a menu
- * \date
  */
-
 class MenuElem
 {
+	/*! Name tag. */
 	string name;
+	/*! Callback function pointer. */
 	fptr callback;
+	/*! Argument payload pointer. */
 	void* args;
+	/*! Active flag. */
 	bool active;
 public:
 	MenuElem(string, fptr, void*);
-	MenuElem(string, fptr, void*, bool);
+//	MenuElem(string, fptr, void*, bool);
 	void click();	
 	bool isActive();
 	void activate();
@@ -49,23 +53,21 @@ public:
  *
  * \brief Top element of a given menu - names shown in top menu bar.
  *
- * \author [your name]
- * \date
+ * \author Paweł J. Wal <pjw@paweljw.eu>
  */
 class MenuTopElem
 {
+	/*! Name tag. */
 	string name;
-	bool _open;
+	/*! X rectangle coordinates. */
 	float x1, x2;
+	/*! Y rectangle coordinates. */	
 	float y1, y2;
-
 public:
+	/*! All elements of the category. */
 	vector<MenuElem> elems;
 	MenuTopElem(string);
 	void addElem(string, fptr, void*);
-	void open();
-	void close();
-	bool isOpen();
 	string getName();
 	void setPos(float, float, float, float);
 	void getPos(float&, float&, float&, float&);
@@ -76,8 +78,7 @@ public:
  *
  * \brief Main class for menu control and drawing, focused around the concept of a menu as a state machine.
  *
- * \author [your name]
- * \date
+ * \author Paweł J. Wal <pjw@paweljw.eu>
  */
 class Menu
 {
@@ -98,9 +99,6 @@ public:
 	void addElem(string);
 	void getPos(float&, float&, float&, float&);
 	Menu(ALLEGRO_DISPLAY*&);
-	bool isShown();
-	void show();
-	void hide();
 	void draw(ALLEGRO_DISPLAY*);
 	void draw(ALLEGRO_BITMAP*);
 	MenuTopElem* element(const char*);

@@ -36,6 +36,7 @@ int main()
 	m->addElem(string("Czy one rosną?"));
 
 	m->element("Test")->addElem("Testowa opcja", dummy, (void*)NULL);
+
 	m->element("Test")->addElem("Testowa opcja 1", dummy, (void*)NULL);
 	m->element("Test")->addElem("Testowa opcja 2", dummy, (void*)NULL);
 	m->element("Test")->addElem("Testowa opcja 3", dummy, (void*)NULL);

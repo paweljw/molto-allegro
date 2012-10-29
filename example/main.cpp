@@ -7,7 +7,10 @@
 
 int dummy(void* arg)
 {
-	cout << "Callback called; you weren't home." << endl;
+	int *wejscie = (int*)(arg);
+
+	cout << "Callback called; you weren't home." << *wejscie << endl;
+	*(wejscie) = 11;
 	return 0;
 }
 
@@ -35,7 +38,12 @@ int main()
 	m->addElem(string("Kolejny"));
 	m->addElem(string("Czy one rosną?"));
 
-	m->element("Test")->addElem("Testowa opcja", dummy, (void*)NULL);
+	int dupa;
+	dupa = 10;
+
+	m->element("Test")->addElem("Testowa opcja", dummy, (void*)&dupa);
+
+
 
 	m->element("Test")->addElem("Testowa opcja 1", dummy, (void*)NULL);
 	m->element("Test")->addElem("Testowa opcja 2", dummy, (void*)NULL);
@@ -65,7 +73,7 @@ int main()
 
 			m->click(x, y);
 			m->draw(display);
-
+				cout << dupa << endl;
 			al_flip_display();
 			
 		}

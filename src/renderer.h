@@ -1,3 +1,11 @@
+enum TEXT_ALIGN
+{
+	TA_LEFT,
+	TA_RIGHT,
+	TA_CENTER,
+	TA_JUSTIFY
+};
+
 class Renderer
 {
 public:

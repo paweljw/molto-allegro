@@ -14,6 +14,7 @@ int dummy(void* arg)
 	return 0;
 }
 
+
 using namespace std;
 
 int main()
@@ -34,21 +35,20 @@ int main()
 	Menu *m = new Menu(display);
 
 	m->addElem(string("Test"));
-	m->addElem(string("Testowy 2"));	
-	m->addElem(string("Kolejny"));
-	m->addElem(string("Czy one rosną?"));
+	m->addElem(string("Test 2"));	
+	m->addElem(string("Test 3"));
 
-	int dupa;
-	dupa = 10;
+	int param;
+	param = 10;
 
-	m->element("Test")->addElem("Testowa opcja", dummy, (void*)&dupa);
-
+	m->element("Test")->addElem("Testowa opcja", dummy, (void*)&param);
 
 
-	m->element("Test")->addElem("Testowa opcja 1", dummy, (void*)NULL);
-	m->element("Test")->addElem("Testowa opcja 2", dummy, (void*)NULL);
-	m->element("Test")->addElem("Testowa opcja 3", dummy, (void*)NULL);
-	m->element("Test")->addElem("Testowa opcja 4", dummy, (void*)NULL);
+
+	m->element("Test")->addElem("Testowa opcja 1", dummy, (void*)&param);
+	m->element("Test")->addElem("Testowa opcja 2", dummy, (void*)&param);
+	m->element("Test")->addElem("Testowa opcja 3", dummy, (void*)&param);
+	m->element("Test")->addElem("Testowa opcja 4", dummy, (void*)&param);
 
 	m->draw(display);
 
@@ -73,7 +73,7 @@ int main()
 
 			m->click(x, y);
 			m->draw(display);
-				cout << dupa << endl;
+
 			al_flip_display();
 			
 		}

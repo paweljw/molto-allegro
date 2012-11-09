@@ -3,7 +3,7 @@ LIBCAT := -L../bin/
 MA := -lmoltoallegro -lma_render_a5
 
 all:
-	g++ main.cpp -o example $(ALLEGRO) $(LIBCAT) $(MA) -lma_render_a5
+	g++ main.cpp -o example $(ALLEGRO) $(LIBCAT) $(MA)
 
 clean:
 	rm -f *.o

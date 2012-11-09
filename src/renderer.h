@@ -1,3 +1,7 @@
+#ifndef RENDERER_H
+
+#define RENDERER_H
+
 enum TEXT_ALIGN
 {
 	TA_LEFT,
@@ -22,4 +26,7 @@ public:
 	virtual void drawFilledRectangle();
 	virtual void drawLine();
 	virtual void drawText();
+	virtual void loadFont();
 }
+
+#endif

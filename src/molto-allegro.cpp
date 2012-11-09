@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "renderer.h"
 #include "molto-allegro.h"
 using namespace std;
 

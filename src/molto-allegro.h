@@ -1,3 +1,9 @@
+#pragma once
+
+#ifndef MA_H
+
+#define MA_H
+
 /*!
  * \file molto-allegro.h
  *
@@ -8,6 +14,7 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_ttf.h>
+#include "renderer.h"
 using namespace std;
 
 /*! Simple function pointer definition for later use in callbacks. */
@@ -88,19 +95,18 @@ class Menu
 	float y1, y2;
 	int screen_w;
 	int screen_h;
-	ALLEGRO_BITMAP* menubmp;
-	ALLEGRO_FONT *font;
-	void draw();
 	void setPos(float, float, float, float);
 	MENU_STATE state;
 	int openIx;
 	int hitBoxW;
+	Renderer* r;
 public:
 	void addElem(string);
 	void getPos(float&, float&, float&, float&);
-	Menu(ALLEGRO_DISPLAY*&);
-	void draw(ALLEGRO_DISPLAY*);
-	void draw(ALLEGRO_BITMAP*);
+	Menu(Renderer*);
+	void draw();
 	MenuTopElem* element(const char*);
 	bool click(float, float);
 };
+
+#endif

@@ -4,13 +4,14 @@
 #include <iostream>
 
 #include "../src/molto-allegro.h"
+#include "../src/allegro5_renderer.h"
 
 int dummy(void* arg)
 {
-	int *wejscie = (int*)(arg);
+	int *input = (int*)(arg);
 
-	cout << "Callback called; you weren't home." << *wejscie << endl;
-	*(wejscie) = 11;
+	cout << "Callback called, said " << *input << endl;
+	*(input) += 1;
 	return 0;
 }
 
@@ -19,6 +20,8 @@ using namespace std;
 
 int main()
 {
+
+
 	al_init();
 	
 	ALLEGRO_DISPLAY* display = al_create_display(640, 480);
@@ -32,7 +35,9 @@ int main()
 	al_install_mouse();
 	al_register_event_source(q, al_get_mouse_event_source());
 
-	Menu *m = new Menu(display);
+	Allegro5_Renderer* renderer = new Allegro5_Renderer(display);
+
+	Menu *m = new Menu(renderer);
 
 	m->addElem(string("Test"));
 	m->addElem(string("Test 2"));	
@@ -41,16 +46,12 @@ int main()
 	int param;
 	param = 10;
 
-	m->element("Test")->addElem("Testowa opcja", dummy, (void*)&param);
+	m->element("Test")->addElem("Test button 1", dummy, (void*)&param);
+	m->element("Test")->addElem("Test button 2", dummy, (void*)&param);
+	m->element("Test")->addElem("Test button 3", dummy, (void*)&param);
+	m->element("Test")->addElem("Test button 4", dummy, (void*)&param);
 
-
-
-	m->element("Test")->addElem("Testowa opcja 1", dummy, (void*)&param);
-	m->element("Test")->addElem("Testowa opcja 2", dummy, (void*)&param);
-	m->element("Test")->addElem("Testowa opcja 3", dummy, (void*)&param);
-	m->element("Test")->addElem("Testowa opcja 4", dummy, (void*)&param);
-
-	m->draw(display);
+	m->draw();
 
 	al_flip_display();
 
@@ -71,8 +72,10 @@ int main()
 			al_set_target_bitmap(al_get_backbuffer(display));
 			al_clear_to_color(al_map_rgb(0,0,0));
 
-			m->click(x, y);
-			m->draw(display);
+			if(m->click(x, y))
+				cout << "New param value: " << param << endl;
+
+			m->draw();
 
 			al_flip_display();
 			

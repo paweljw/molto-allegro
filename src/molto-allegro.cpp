@@ -18,6 +18,7 @@ using namespace std;
 
 /*! Menu height. */
 #define MENU_HT 25
+#define DEBUG false
 
 /*!
  * \brief Checks whether point is within a rectangle.
@@ -65,22 +66,15 @@ void Menu::setPos(float ex1, float ey1, float ex2, float ey2)
  *
  * \param disp Allegro display.
  */
-Menu::Menu(ALLEGRO_DISPLAY*& disp)
+Menu::Menu(Renderer *zr)
 {
-	screen_w = al_get_display_width(disp);
-	screen_h = al_get_display_height(disp);
+	r = zr;
+	screen_w = r->getDisplayWidth();
+	screen_h = r->getDisplayHeight();
 
 	setPos(0, 0, screen_w, MENU_HT - 2);
 	shown = true;
 
-	al_init_primitives_addon();
-	al_init_font_addon();
-	al_init_ttf_addon();
-
-	font = al_load_ttf_font("dvs.ttf", MENU_HT/2 + 2, 0);
-
-	menubmp = al_create_bitmap(screen_w, screen_h);
-	cout << screen_w << "x" << screen_h << endl;
 
 	state = MENU_CLOSED;
 	hitBoxW = 0;
@@ -99,26 +93,16 @@ bool Menu::click(float x, float y)
 	for(unsigned int i=0;i<elems.size();i++)
 	{
 		elems.at(i).getPos(tx1, ty1, tx2, ty2);
-		cout << x1 << "," << y1 << " " << x2 << "," << y2 << endl;
 		if(pIR(tx1, ty1, tx2, ty2, x, y))
 		{
 			state = MENU_OPEN;
 			openIx = i;
-			cout << openIx << " got clicked" << endl;
 			return true;
 		}
 	}
-
-	// no top level menus have been hit; are we open?
 	
 	if(state == MENU_OPEN)
 	{
-		// we check rectangle with:
-		// x1 = openIx's x1
-		// y1 = MENU_HT
-		// x2 = openIx's number of elements times MENU_HT
-		// y2 = hitBoxW
-
 		elems.at(openIx).getPos(tx1, ty1, tx2, ty2);		
 
 		for(unsigned int i=0;i<elems.at(openIx).elems.size();i++)
@@ -132,12 +116,7 @@ bool Menu::click(float x, float y)
 		}	
 	} 
 
-	if(state == MENU_OPEN)
-	{
-		// Click was outside an open menu; default behavior should be close.
-		state = MENU_CLOSED;
-		cout << "Menu got closed." << endl;
-	}
+	if(state == MENU_OPEN) state = MENU_CLOSED;
 
 	return false;
 }		
@@ -147,38 +126,12 @@ bool Menu::click(float x, float y)
  *
  * \param display Allegro display.
  */
-void Menu::draw(ALLEGRO_DISPLAY* display)
-{
-	draw();
-	al_set_target_bitmap(al_get_backbuffer(display));
-	al_draw_bitmap(menubmp, 0,0,0);
-}
 
-/*!
- * \brief Draws menu to a bitmap.
- *
- * \param bmp Allegro bitmap.
- */
-void Menu::draw(ALLEGRO_BITMAP* bmp)
-{
-	draw();
-	al_set_target_bitmap(bmp);
-	al_draw_bitmap(menubmp, 0, 0, 0);
-}
-
-/*!
- * \brief Draws the menu to an internal bitmap for later reuse.
- */
 void Menu::draw()
 {
-	cout << "Going draw" << endl;
-
-	al_set_target_bitmap(menubmp);
-
-	al_clear_to_color(al_map_rgba(0,0,0,0));
-
-	al_draw_filled_rectangle(x1, y1, x2, y2, al_map_rgb(255, 255, 240));
-	al_draw_line(x1, y2, x2, y2, al_map_rgb(0x66, 0x66, 0x66), 2);
+	r->clearToColor(0x00000000);
+	r->drawFilledRectangle(x1, y1, x2, y2, 0xFFFFF0FF);
+	r->drawLine(x1, y2, x2, y2, 0x666666FF, 2);
 
 	int offset = 0;
 	
@@ -187,9 +140,9 @@ void Menu::draw()
 		string buf;
 		buf = elems.at(i).getName();
 
-		int cw = al_get_text_width(font, buf.c_str()) + 20;
+		int cw = r->getTextWidth(buf) + 20;
 		
-		al_draw_text(font, al_map_rgb(0, 0, 0), offset+cw/2, 3, ALLEGRO_ALIGN_CENTRE, buf.c_str());
+		r->drawText(offset+cw/2, 3, buf, TA_CENTER, 0x000000FF);
 
 		// Reset the box for menu element (click hitbox)
 		// It could have changed
@@ -204,23 +157,20 @@ void Menu::draw()
 
 		height += elems.at(openIx).elems.size()*MENU_HT;
 			
-		cout << "Draw height " << height << endl;
-
 		float tx1, tx2, ty1, ty2;
 		elems.at(openIx).getPos(tx1, ty1, tx2, ty2);		
-		cout << x2 << "," << y2 << endl;
 
 		if(height == 0)
 		{
 			// empty menu!
 			height = MENU_HT;
-			int longest = 30 + al_get_text_width(font, "- Empty -") + tx1;
-			al_draw_filled_rectangle(tx1, MENU_HT-2, longest, height+MENU_HT, al_map_rgb(255, 255, 240));
+			int longest = 30 + r->getTextWidth((string)"- Empty -") + tx1;
 
-			al_draw_line(longest, MENU_HT-2, longest, MENU_HT*2, al_map_rgb(0x66, 0x66, 0x66), 1);
-			al_draw_line(tx1, height+MENU_HT, longest, MENU_HT*2, al_map_rgb(0x66, 0x66, 0x66), 1);	
+			r->drawFilledRectangle(tx1, MENU_HT-2, longest, height+MENU_HT, 0xFFFFF0FF);
+			r->drawLine(longest, MENU_HT-2, longest, MENU_HT*2, 0x666666FF, 1);
+			r->drawLine(tx1, height+MENU_HT, longest, MENU_HT*2, 0x666666FF, 1);	
 
-			al_draw_text(font, al_map_rgb(0x66, 0x66, 0x66), tx1+10, MENU_HT*1+2, ALLEGRO_ALIGN_LEFT, "- Empty -");		
+			r->drawText(tx1+10, MENU_HT*1+2, "- Empty -", TA_LEFT, 0x666666FF);		
 		} else {
 
 
@@ -236,22 +186,23 @@ void Menu::draw()
 				} 
 			}
 
-			int longest = 30 + al_get_text_width(font, elems.at(openIx).elems.at(mInt).getName().c_str());
+			int longest = 30 + r->getTextWidth(elems.at(openIx).elems.at(mInt).getName());
 			hitBoxW = longest;
-			al_draw_filled_rectangle(tx1, MENU_HT-2, tx1 + longest, height+MENU_HT, al_map_rgb(255, 255, 240));
+			r->drawFilledRectangle(tx1, MENU_HT-2, tx1 + longest, height+MENU_HT, 0xFFFFF0FF);
 
 			for(unsigned int i=0; i<elems.at(openIx).elems.size(); i++)
 			{
-				ALLEGRO_COLOR col;
+				int col;
 				MenuElem menel = elems.at(openIx).elems.at(i);
-				col = (menel.isActive() ? al_map_rgb(0, 0, 0) : al_map_rgb(0x66, 0x66, 0x66));
-				al_draw_text(font, col, tx1+10, MENU_HT*(i+1)+2, ALLEGRO_ALIGN_LEFT, menel.getName().c_str());
+				col = (menel.isActive() ? 0x000000FF : 0x666666FF);
+				r->drawText(tx1+10, MENU_HT*(i+1)+2, menel.getName(), TA_LEFT, col);
 			}
 
-			al_draw_line(longest, MENU_HT-2, tx1 + longest, MENU_HT * ( elems.at(openIx).elems.size()+1), al_map_rgb(0x66, 0x66, 0x66), 1);
-			al_draw_line(tx1, height+MENU_HT, tx1 + longest, MENU_HT * ( elems.at(openIx).elems.size()+1), al_map_rgb(0x66, 0x66, 0x66), 1);
+			r->drawLine(longest, MENU_HT-2, tx1 + longest, MENU_HT * ( elems.at(openIx).elems.size()+1), 0x666666FF, 1);
+			r->drawLine(tx1, height+MENU_HT, tx1 + longest, MENU_HT * ( elems.at(openIx).elems.size()+1), 0x666666FF, 1);
 		}
 	}
+	r->paintToDisplay();
 }
 
 /*!
